@@ -6,7 +6,7 @@
 Plugin Name: ONTRApages
 Plugin URI: http://google.com
 Description: ONTRApages for WordPress allows Ontraport users to connect to their accounts and easily publish their landing pages on their own WordPress sites.
-Version: 1.2.25
+Version: 1.2.26
 Author: Ontraport
 Author URI: http://ontraport.com/
 License: GPLv2 or later
@@ -35,7 +35,7 @@ if ( !function_exists( 'add_action' ) )
 	exit;
 }
 
-if ( !defined( 'ONTRAPAGES_VERSION' ) ) define( 'ONTRAPAGES_VERSION', '1.2.25' );
+if ( !defined( 'ONTRAPAGES_VERSION' ) ) define( 'ONTRAPAGES_VERSION', '1.2.26' );
 if ( !defined( 'ONTRAPAGES__MINIMUM_WP_VERSION' ) ) define( 'ONTRAPAGES__MINIMUM_WP_VERSION', '4.0' );
 if ( !defined( 'ONTRAPAGES__PLUGIN_URL' ) ) define( 'ONTRAPAGES__PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 if ( !defined( 'ONTRAPAGES__PLUGIN_DIR' ) ) define( 'ONTRAPAGES__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );

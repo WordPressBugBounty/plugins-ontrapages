@@ -2,8 +2,8 @@
 Contributors: Ontraport, william.deangelis
 Tags: landing pages, sales pages, content delivery, coming soon pages, landing page builder
 Requires at least: 4.0
-Stable tag: 1.2.25
-Tested up to: 6.1.1
+Stable tag: 1.2.26
+Tested up to: 7.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,9 @@ Visit ontraport.com for more information about ONTRApages.
 2. /_inc/screenshot-2.png
 
 == Changelog ==
+
+= 1.2.26 =
+* Tested for WordPress version 7.0.1
 
 = 1.2.25 =
 * Tested for WordPress version 6.1.1
@@ -161,6 +164,9 @@ Visit ontraport.com for more information about ONTRApages.
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.2.26 =
+* Tested for WordPress version 7.0.1
 
 = 1.2.25 =
 * Tested for WordPress version 6.1.1
