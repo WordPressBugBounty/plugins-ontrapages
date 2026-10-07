@@ -34,7 +34,7 @@ class OPObjects
 		$opObjects = array();
 
 		$objectSet = OPObjects::requestOPObjects( $type );
-		
+
 		if ($objectSet == "timeout-error")
 		{
 			return "timeout-error";
@@ -45,8 +45,12 @@ class OPObjects
 			return "error in response";
 		}
 
-		$objectSet = json_decode( $objectSet, true);
-		$objectSet = $objectSet["data"];
+		$objectSet = OPObjects::decodeObjectSet( $objectSet );
+
+		if ( $objectSet === false )
+		{
+			return "timeout-error";
+		}
 
 		//If the number of records is 50, let's see if there are more
 		if ( count( $objectSet ) === 50 )
@@ -56,8 +60,13 @@ class OPObjects
 				if ( $number !== 0 )
 				{
 					$extraVars = '&start=' . $number;
-					$objectSet = json_decode( OPObjects::requestOPObjects( $type, $extraVars ), true );
-					$objectSet = $objectSet["data"];
+					$objectSet = OPObjects::decodeObjectSet( OPObjects::requestOPObjects( $type, $extraVars ) );
+
+					// A failed follow-up request (timeout, auth error, rate limit, etc.) would otherwise leave us with a null set
+					if ( $objectSet === false )
+					{
+						return "timeout-error";
+					}
 				}
 
 				foreach ($objectSet as $setData)
@@ -81,6 +90,25 @@ class OPObjects
 		}
 
 		return $newOpObjects;
+	}
+
+
+	// Decodes a response from requestOPObjects into its array of object items. Returns false if the response isn't valid JSON with a data array.
+	private static function decodeObjectSet( $response )
+	{
+		if ( !is_string( $response ) )
+		{
+			return false;
+		}
+
+		$decoded = json_decode( $response, true );
+
+		if ( !is_array( $decoded ) || !isset( $decoded["data"] ) || !is_array( $decoded["data"] ) )
+		{
+			return false;
+		}
+
+		return $decoded["data"];
 	}
 
 
@@ -133,7 +161,6 @@ class OPObjects
                 $condition = json_encode($condition);
                 $condition = urlencode($condition);
                 $request = OPAPI . 'objects?objectID=20&performAll=true&sort=name&sortDir=asc&condition=' . $condition . '&searchNotes=true&listFields=id%2Cname%2Cdomain%2Cvisits_0%2Cvisits_1%2Cvisits_2%2Cvisits_3%2Ca_convert%2Cb_convert%2Cc_convert%2Cd_convert' . $extraVars;
-                $opObjects = OPCoreFunctions::apiRequest( $request, $appid, $key );
                 break;
 
 			default:
@@ -165,7 +192,7 @@ class OPObjects
 	protected static function modifyOntrapagesObjects( $opObjects )
 	{
 		$opObjects = json_decode( $opObjects );
-		$ONTRApageObjects = $opObjects->data;
+		$ONTRApageObjects = isset( $opObjects->data ) ? $opObjects->data : null;
 
 		if ( is_array($ONTRApageObjects) )
 		{

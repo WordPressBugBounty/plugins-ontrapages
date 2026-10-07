@@ -2,7 +2,7 @@
 Contributors: Ontraport, william.deangelis
 Tags: landing pages, sales pages, content delivery, coming soon pages, landing page builder
 Requires at least: 4.0
-Stable tag: 1.2.26
+Stable tag: 1.2.27
 Tested up to: 7.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -34,6 +34,10 @@ Visit ontraport.com for more information about ONTRApages.
 2. /_inc/screenshot-2.png
 
 == Changelog ==
+
+= 1.2.27 =
+* Fixed a fatal error when loading the ONTRApages metabox on accounts with 50+ pages if a page request failed
+* Removed a duplicate API request when fetching pages
 
 = 1.2.26 =
 * Tested for WordPress version 7.0.1
@@ -164,6 +168,10 @@ Visit ontraport.com for more information about ONTRApages.
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.2.27 =
+* Fixed a fatal error when loading the ONTRApages metabox on accounts with 50+ pages if a page request failed
+* Removed a duplicate API request when fetching pages
 
 = 1.2.26 =
 * Tested for WordPress version 7.0.1
