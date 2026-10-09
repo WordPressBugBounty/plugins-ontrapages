@@ -234,6 +234,12 @@ button.op-green-bg:hover {
     background-color: #F3F3F3;
 }
 
+.opm-opselect-items .op-refresh-pages {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 12px;
+}
+
 #opMetabox .handlediv {
     color: white;
 }

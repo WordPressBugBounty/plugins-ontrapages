@@ -50,8 +50,9 @@ class ONTRApagesAdmin
 		// Check API Creds first then proceed if ok
 		$errorCode = OPCoreFunctions::checkAPICreds( 'code' );
 
-		// Get ONTRApage Objects
-		$ONTRApages = OPObjects::getOPObjects( 'pages' );
+		// Get ONTRApage Objects. The list is cached, so the refresh link lets users pull in pages they just published.
+		$refresh = isset( $_GET['op_refresh_pages'] ) && wp_verify_nonce( $_GET['op_refresh_pages'], 'op_refresh_pages' );
+		$ONTRApages = OPObjects::getOPObjects( 'pages', $refresh );
 
 		if ( $ONTRApages !== 'auth-error' && $errorCode === 0 && is_array( $ONTRApages ) )
 		{
@@ -67,6 +68,7 @@ class ONTRApagesAdmin
 					<select name="ontrapage" ng-model="selectedPage" title="Choose which Landing Page you would like to use" ng-change="pageChanged()" ng-options="page.id as page.name for page in pages track by page.id">
 						<option value="" selected>Choose which Landing Page you would like to use</option>
 					</select>
+					<a class="op-refresh-pages" href="' . esc_url( add_query_arg( 'op_refresh_pages', wp_create_nonce( 'op_refresh_pages' ) ) ) . '" title="Don\'t see a page you just published? Reload the list from your account.">Refresh list</a>
 					<div class="op-ontrapage-details op-hidden" ng-show="sPage != null && sPage.visits_0 != 0">
 						<div class="op-odetail" title="Split tests allow you to create multiple versions of a webpage with small differences that you can test against each other to see which performs the best! Learn more at ontrapages.com." ng-show="sPage.visits_0 != 0 || sPage.a_convert != 0">
 							<div class="op-odetails-lp-stat-title" ng-show="sPage.visits_1 == 0 && sPage.visits_2 == 0 && sPage.visits_3 == 0">Page Stats</div>

@@ -2,18 +2,46 @@
 // Manages the objects that get used in the BE settings of each ONTRApages or ONTRAform.
 class OPObjects
 {
+	// How long a fetched list of objects is reused before calling the API again. Accounts with hundreds of pages need one API call per 50 pages, which made every edit screen load take 10+ seconds.
+	const CACHE_TTL = 900;
 
-	// Basic function that starts the process of getting and formatting the ONTRApage or ONTRAform objects. Returns the formatted objects ready to use.
-	public static function getOPObjects( $type )
+
+	// Basic function that starts the process of getting and formatting the ONTRApage or ONTRAform objects. Pass $refresh to skip the cached copy. Returns the formatted objects ready to use.
+	public static function getOPObjects( $type, $refresh=false )
 	{
 		if ( get_option('opValidCreds') != 1 )
 		{
 			return 'auth-error';
 		}
 
+		$cacheKey = OPObjects::cacheKey( $type );
+
+		if ( $refresh === false )
+		{
+			$opObjects = get_transient( $cacheKey );
+
+			if ( is_array( $opObjects ) )
+			{
+				return $opObjects;
+			}
+		}
+
 		$opObjects = OPObjects::createObject( $type );
 
+		// Only cache complete lists so an API hiccup isn't remembered
+		if ( is_array( $opObjects ) )
+		{
+			set_transient( $cacheKey, $opObjects, self::CACHE_TTL );
+		}
+
 		return $opObjects;
+	}
+
+
+	// Builds the transient name for a cached object list. The API creds are part of it so switching accounts never shows the old account's objects. Returns the transient name.
+	private static function cacheKey( $type )
+	{
+		return 'ontrapages_objects_' . $type . '_' . md5( get_option( 'opAppID' ) . '|' . get_option( 'opAPIKey' ) );
 	}
 
 

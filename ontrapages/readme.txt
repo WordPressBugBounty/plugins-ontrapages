@@ -2,7 +2,7 @@
 Contributors: Ontraport, william.deangelis
 Tags: landing pages, sales pages, content delivery, coming soon pages, landing page builder
 Requires at least: 4.0
-Stable tag: 1.2.27
+Stable tag: 1.2.28
 Tested up to: 7.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -34,6 +34,9 @@ Visit ontraport.com for more information about ONTRApages.
 2. /_inc/screenshot-2.png
 
 == Changelog ==
+
+= 1.2.28 =
+* Speed up the ONTRApage edit screen by caching the list of pages for 15 minutes, with a "Refresh list" link to reload it
 
 = 1.2.27 =
 * Fixed a fatal error when loading the ONTRApages metabox on accounts with 50+ pages if a page request failed
@@ -168,6 +171,9 @@ Visit ontraport.com for more information about ONTRApages.
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.2.28 =
+* Speed up the ONTRApage edit screen by caching the list of pages for 15 minutes, with a "Refresh list" link to reload it
 
 = 1.2.27 =
 * Fixed a fatal error when loading the ONTRApages metabox on accounts with 50+ pages if a page request failed
